@@ -6,6 +6,9 @@ import 'package:amoura/auth/views/login_screen.dart';
 import 'package:amoura/auth/views/signup_screen.dart';
 import 'package:amoura/firebase_options.dart';
 import 'package:amoura/home_screen.dart';
+import 'package:amoura/link_partner_screen.dart';
+import 'package:amoura/settings_screen.dart';
+import 'package:amoura/user/user_bloc.dart';
 import 'package:amoura/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +34,8 @@ class MyApp extends StatelessWidget {
           create: (_) =>
               AuthBloc(authRepository: authRepository)..add(AuthCheckStatus()),
         ),
+        BlocProvider<UserBloc>(create: (_) => UserBloc()..add(LoadUser())),
+        BlocProvider(create: (_) => C),
       ],
       child: MaterialApp(
         title: 'Amoura',
@@ -44,6 +49,8 @@ class MyApp extends StatelessWidget {
           '/signup': (_) => const SignUpScreen(),
           '/login': (_) => const LoginScreen(),
           '/home': (_) => const HomeScreen(),
+          '/settings': (_) => const SettingsScreen(),
+          '/link-partner': (_) => const LinkPartnerScreen(),
         },
       ),
     );

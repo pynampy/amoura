@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../auth/bloc/auth_bloc.dart';
-import '../auth/bloc/auth_event.dart';
 import '../auth/bloc/auth_state.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  void _logout(BuildContext context) {
-    context.read<AuthBloc>().add(AuthLogoutRequested());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +19,13 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Home"),
+          leading: SizedBox(),
           actions: [
             IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () => _logout(context),
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Navigator.pushNamed(context, '/settings');
+              },
             ),
           ],
         ),
