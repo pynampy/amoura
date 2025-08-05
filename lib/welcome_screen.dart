@@ -1,3 +1,4 @@
+import 'package:amoura/common_widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -5,6 +6,7 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -17,18 +19,40 @@ class WelcomeScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 40),
-              ElevatedButton(
+
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.pushNamed(context, '/signup');
+              //   },
+              //   child: Container(
+              //     decoration: BoxDecoration(color: Colors.blue, borderRadius: 25),
+              //     width: size.width,
+              //     height: 50,
+
+              //     child: Center(
+              //       child: const Text(
+              //         'Sign Up',
+              //         style: TextStyle(color: Colors.white),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              CustomButton(
+                text: "Sign Up",
                 onPressed: () {
                   Navigator.pushNamed(context, '/signup');
                 },
-                child: const Text('Sign Up'),
               ),
               const SizedBox(height: 12),
-              OutlinedButton(
+              Text("Or"),
+              const SizedBox(height: 12),
+
+              CustomButton(
+                color: Colors.blue,
+                text: "Login",
                 onPressed: () {
                   Navigator.pushNamed(context, '/login');
                 },
-                child: const Text('Log In'),
               ),
             ],
           ),

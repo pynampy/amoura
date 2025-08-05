@@ -20,7 +20,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSignupRequested>((event, emit) async {
       emit(AuthLoading());
       try {
-        await authRepository.signup(event.email, event.password);
+        final user = await authRepository.signup(event.email, event.password);
+        await authRepository.createUserInFirestore(
+          name: event.name,
+          email: event.email,
+          uid: user.user!.uid,
+        );
+
         emit(AuthAuthenticated());
       } catch (e) {
         emit(AuthError(e.toString()));

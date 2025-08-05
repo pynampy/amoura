@@ -30,11 +30,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         return;
       }
 
+      print(data);
+
       emit(
         UserLoaded(
           name: data['name'] ?? '',
           email: data['email'] ?? '',
-          coupleId: data['coupleId'],
+          coupleDocId: data['coupleId'],
+          partnerId: data['partnerUid'],
         ),
       );
     } catch (e) {

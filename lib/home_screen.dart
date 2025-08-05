@@ -1,3 +1,4 @@
+import 'package:amoura/timeline/timeline_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../auth/bloc/auth_bloc.dart';
@@ -29,7 +30,13 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: Center(child: Text('Logged in as: ${user?.email ?? "Unknown"}')),
+        body: TimelineScreen(),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.of(context).pushNamed('/add-journal');
+          },
+        ),
       ),
     );
   }

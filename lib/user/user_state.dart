@@ -12,16 +12,22 @@ class UserLoading extends UserState {}
 class UserLoaded extends UserState {
   final String name;
   final String email;
-  final String? coupleId;
+  final String? coupleDocId;
+  final String? partnerId;
 
   const UserLoaded({
     required this.name,
     required this.email,
-    required this.coupleId,
+    this.coupleDocId,
+    this.partnerId,
   });
 
+  bool get isUserLinked {
+    return partnerId != null;
+  }
+
   @override
-  List<Object?> get props => [name, email, coupleId];
+  List<Object?> get props => [name, email];
 }
 
 class UserError extends UserState {

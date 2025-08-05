@@ -1,6 +1,9 @@
 import 'package:amoura/auth/bloc/auth_bloc.dart';
 import 'package:amoura/auth/bloc/auth_event.dart';
 import 'package:amoura/auth/bloc/auth_state.dart';
+import 'package:amoura/common_widgets/back_button.dart';
+import 'package:amoura/common_widgets/custom_button.dart';
+import 'package:amoura/common_widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,7 +37,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Log In')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false, // disables default back button
+        leading: BackButtonWidget(
+          onTap: () => Navigator.of(context).maybePop(),
+        ),
+      ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthAuthenticated) {
@@ -54,32 +62,43 @@ class _LoginScreenState extends State<LoginScreen> {
               key: _formKey,
               child: Column(
                 children: [
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(labelText: 'Email'),
-                    validator: (val) => val == null || !val.contains('@')
-                        ? 'Enter valid email'
-                        : null,
+                  Text(
+                    "Log In",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
                   ),
-                  const SizedBox(height: 12),
-                  TextFormField(
+                  Text(
+                    "Welcome back! Let's get you logged in!",
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 40),
+
+                  RoundedTextField(
+                    label: "Email",
+                    hintText: "Enter your email",
+                    controller: _emailController,
+                  ),
+
+                  SizedBox(height: 15),
+
+                  RoundedTextField(
+                    label: "Password",
+                    hintText: "Enter your password",
                     controller: _passwordController,
                     obscureText: true,
-                    decoration: const InputDecoration(labelText: 'Password'),
-                    validator: (val) => val != null && val.length < 6
-                        ? 'Min 6 characters'
-                        : null,
                   ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: isLoading
-                        ? null
-                        : () => _onLoginPressed(context),
-                    child: isLoading
-                        ? const CircularProgressIndicator()
-                        : const Text('Log In'),
+                  SizedBox(height: 30),
+
+                  CustomButton(
+                    text: isLoading ? "Fetching your account..." : "Login",
+                    onPressed: () {
+                      isLoading ? null : _onLoginPressed((context));
+                    },
                   ),
-                  const SizedBox(height: 12),
+
                   TextButton(
                     onPressed: () {
                       Navigator.pushReplacementNamed(context, '/signup');
